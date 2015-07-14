@@ -184,7 +184,7 @@ function panopto_delete_instance($id) {
  */
 function panopto_get_coursemodule_info($coursemodule) {
     global $CFG, $DB;
-    require_once("$CFG->dirroot/mod/panopto/locallib.php");
+    require_once($CFG->dirroot.'/mod/panopto/locallib.php');
 
     if (!$panopto = $DB->get_record('panopto', array('id'=>$coursemodule->instance),
             'id, name, display, displayoptions, externalpanopto, intro, introformat')) {
@@ -239,7 +239,7 @@ function panopto_page_type_list($pagetype, $parentcontext, $currentcontext) {
  */
 function panopto_export_contents($cm, $basepanopto) {
     global $CFG, $DB;
-    require_once("$CFG->dirroot/mod/panopto/locallib.php");
+    require_once($CFG->dirroot.'/mod/panopto/locallib.php');
     $contents = array();
     $context = context_module::instance($cm->id);
 
