@@ -46,7 +46,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('panopto/framesize',
         get_string('framesize', 'panopto'), get_string('configframesize', 'panopto'), 130, PARAM_INT));
     $settings->add(new admin_setting_configcheckbox('panopto/requiremodintro',
-        get_string('requiremodintro', 'admin'), get_string('configrequiremodintro', 'admin'), 1));
+        get_string('requirepanoptodesc', 'panopto'), get_string('configrequirepanoptodesc', 'panopto'), 1));
     $settings->add(new admin_setting_configtext('panopto/panoptoserver', get_string('panoptoserver', 'panopto'),
         get_string('configpanoptoserver', 'panopto'), '', PARAM_TEXT));
     $settings->add(new admin_setting_configtext('panopto/authinstance', get_string('authinstance', 'panopto'),

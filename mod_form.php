@@ -45,7 +45,16 @@ class mod_panopto_mod_form extends moodleform_mod {
         }
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $this->add_intro_editor($config->requiremodintro);
+
+        // description
+        if (method_exists($this, 'standard_intro_elements')) {
+            $this->standard_intro_elements();
+        } else {
+            $this->add_intro_editor($config->requiremodintro);
+        }
+        if ($config->requiremodintro) {
+            $mform->addRule('introeditor', get_string('required'), 'required', null, 'client');
+        }
 
         //-------------------------------------------------------
         $mform->addElement('header', 'content', get_string('contentheader', 'panopto'));

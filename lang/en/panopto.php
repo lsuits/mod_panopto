@@ -25,6 +25,7 @@
 
 $string['clicktoopen'] = 'Click {$a} link to open resource.';
 $string['configdisplayoptions'] = 'Select all options that should be available, existing settings are not modified. Hold CTRL key to select multiple fields.';
+$string['configrequirepanoptodesc'] = 'If enabled, users will be forced to enter a description for each Panopto link.';
 $string['configframesize'] = 'When a Panopto link is displayed within a frame, this value is the height (in pixels) of the top frame (which contains the navigation).';
 $string['configauthinstance'] = 'The name of the authentication instance set within your Panopto server.';
 $string['configpanoptoserver'] = 'The URL of your Panopto server without a trailing slash.';
@@ -42,6 +43,7 @@ $string['displayselect_help'] = 'This setting, and whether the browser allows em
 * New window - The Panopto is displayed in a new browser window with menus and an address bar';
 $string['displayselectexplain'] = 'Choose display type, unfortunately not all types are suitable for all Panopto links.';
 $string['externalpanopto'] = 'Panopto URL';
+$string['requirepanoptodesc'] = 'Require Panopto description';
 $string['framesize'] = 'Frame height';
 $string['invalidstoredpanopto'] = 'Cannot display this resource, the Panopto link is invalid.';
 $string['invalidpanopto'] = 'This Panopto URL is invalid';
