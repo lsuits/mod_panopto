@@ -64,14 +64,20 @@ function panopto_fix_submitted_panopto($panopto) {
     $panopto = html_entity_decode($panopto, ENT_QUOTES, 'UTF-8');
 
     if (!preg_match('|^[a-z]+:|i', $panopto) and !preg_match('|^/|', $panopto)) {
-        // invalid URI, try to fix it by making it normal Panopto,
-        // please note relative panoptos are not allowed, /xx/yy links are ok
+        // invalid URI, try to fix it by making it normal link,
+        // please note relative panopto links are not allowed
         $panopto = 'https://'.$panopto;
     }
 
-    $panopto = preg_replace('/.+[V|v]iewer\.aspx(\?|%3f)id(=|%3d)(.+)/','\3',$panopto);
-    $panopto = $config->panoptoserver . '/Panopto/Pages/Auth/Login.aspx?instance=' . $config->authinstance . '&ReturnUrl=%2fPanopto%2fPages%2fViewer.aspx%3fid%3d' . $panopto;
-
+    // check the link. If it's not a panopto link, forward them to the chosen panopto homepage, if it is, send them to the appropriate place.
+    if(preg_match('/.+[V|v]iewer\.aspx(\?|%3f)id(=|%3d)(.+)/',$panopto)) {
+        // ensure they get to the correct url including the authentication instance avoiding Panopto server's stupidity.
+        $panopto = preg_replace('/.+[V|v]iewer\.aspx(\?|%3f)id(=|%3d)(.+)/','\3',$panopto);
+        $panopto = $config->panoptoserver . '/Panopto/Pages/Auth/Login.aspx?instance=' . $config->authinstance . '&ReturnUrl=%2fPanopto%2fPages%2fViewer.aspx%3fid%3d' . $panopto;
+    } else {
+        // The link supplied makes no sense to us, let's send them to the main panopto page for the chose authentication instance.
+        $panopto = $config->panoptoserver . '/Panopto/Pages/Auth/Login.aspx?instance=' . $config->authinstance;
+    }
     return $panopto;
 }
 
