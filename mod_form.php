@@ -134,17 +134,18 @@ class mod_panopto_mod_form extends moodleform_mod {
         if (!empty($data['externalpanopto'])) {
             $panopto = $data['externalpanopto'];
             if (preg_match('|^/|', $panopto)) {
-                // links relative to server root are ok - no validation necessary
+                $errors['externalpanopto'] = get_string('invalidpanopto', 'panopto');
+                // links relative to server root are not ok - please specify a panopto link
 
-            } else if (preg_match('|^[a-z]+://|i', $panopto) or preg_match('|^https?:|i', $panopto) or preg_match('|^ftp:|i', $panopto)) {
+            } else if (preg_match('|^[a-z]+://|i', $panopto) or preg_match('|^https?:|i', $panopto)) {
                 // normal Panopto
                 if (!panopto_appears_valid_panopto($panopto)) {
                     $errors['externalpanopto'] = get_string('invalidpanopto', 'panopto');
                 }
 
             } else if (preg_match('|^[a-z]+:|i', $panopto)) {
-                // general URI such as teamspeak, mailto, etc. - it may or may not work in all browsers,
-                // we do not validate these at all, sorry
+                // general URI such as teamspeak, mailto, etc. - This is not a Panopto and will be considered an error.
+                $errors['externalpanopto'] = get_string('invalidpanopto', 'panopto');
 
             } else {
                 // invalid URI, we try to fix it by adding 'http://' prefix,

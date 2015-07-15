@@ -194,9 +194,6 @@ function panopto_get_coursemodule_info($coursemodule) {
     $info = new cached_cm_info();
     $info->name = $panopto->name;
 
-    //note: there should be a way to differentiate links from normal resources
-    $info->icon = panopto_guess_icon($panopto->externalpanopto, 24);
-
     $display = panopto_get_final_display_type($panopto);
 
     if ($display == RESOURCELIB_DISPLAY_POPUP) {
@@ -235,7 +232,7 @@ function panopto_page_type_list($pagetype, $parentcontext, $currentcontext) {
 /**
  * Export Panopto resource contents
  *
- * @return array of file content
+ * @return array of export file content
  */
 function panopto_export_contents($cm, $basepanopto) {
     global $CFG, $DB;
@@ -254,10 +251,6 @@ function panopto_export_contents($cm, $basepanopto) {
 
     $panopto = array();
     $panopto['type'] = 'panopto';
-    $panopto['filename']     = $panopto->name;
-    $panopto['filepath']     = null;
-    $panopto['filesize']     = 0;
-    $panopto['filepanopto']      = $fullpanopto;
     $panopto['timecreated']  = null;
     $panopto['timemodified'] = $panopto->timemodified;
     $panopto['sortorder']    = null;
@@ -267,39 +260,4 @@ function panopto_export_contents($cm, $basepanopto) {
     $contents[] = $panopto;
 
     return $contents;
-}
-
-/**
- * Register the ability to handle drag and drop file uploads
- * @return array containing details of the files / types the mod can handle
- */
-function panopto_dndupload_register() {
-    return array('types' => array(
-                     array('identifier' => 'panopto', 'message' => get_string('createpanopto', 'panopto'))
-                 ));
-}
-
-/**
- * Handle a file that has been uploaded
- * @param object $uploadinfo details of the file / content that has been uploaded
- * @return int instance id of the newly created mod
- */
-function panopto_dndupload_handle($uploadinfo) {
-    // Gather all the required data.
-    $data = new stdClass();
-    $data->course = $uploadinfo->course->id;
-    $data->name = $uploadinfo->displayname;
-    $data->intro = '<p>'.$uploadinfo->displayname.'</p>';
-    $data->introformat = FORMAT_HTML;
-    $data->externalpanopto = clean_param($uploadinfo->content, PARAM_Panopto);
-    $data->timemodified = time();
-
-    // Set the display options to the site defaults.
-    $config = get_config('panopto');
-    $data->display = $config->display;
-    $data->popupwidth = $config->popupwidth;
-    $data->popupheight = $config->popupheight;
-    $data->printintro = $config->printintro;
-
-    return panopto_add_instance($data, null);
 }

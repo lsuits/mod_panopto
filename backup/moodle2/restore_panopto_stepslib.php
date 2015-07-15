@@ -53,9 +53,4 @@ class restore_panopto_activity_structure_step extends restore_activity_structure
         // immediately after inserting "activity" record, call this
         $this->apply_activity_instance($newitemid);
     }
-
-    protected function after_execute() {
-        // Add panopto related files, no need to match by itemname (just internally handled context)
-        $this->add_related_files('mod_panopto', 'intro', null);
-    }
 }

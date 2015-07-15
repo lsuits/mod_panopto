@@ -26,7 +26,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once("$CFG->libdir/filelib.php");
 require_once("$CFG->libdir/resourcelib.php");
 require_once("$CFG->dirroot/mod/panopto/lib.php");
 
@@ -265,7 +264,7 @@ function panopto_print_workaround($panopto, $cm, $course) {
 }
 
 /**
- * Display embedded panopto file.
+ * Display embedded panopto linlinkk.
  * @param object $panopto
  * @param object $cm
  * @param object $course
@@ -274,7 +273,6 @@ function panopto_print_workaround($panopto, $cm, $course) {
 function panopto_display_embed($panopto, $cm, $course) {
     global $CFG, $PAGE, $OUTPUT;
 
-    $mimetype = resourcelib_guess_url_mimetype($panopto->externalpanopto);
     $fullpanopto  = panopto_get_full_panopto($panopto, $cm, $course);
     $title    = $panopto->name;
 
@@ -290,17 +288,8 @@ function panopto_display_embed($panopto, $cm, $course) {
         core_media::OPTION_BLOCK => true
     );
 
-    if (in_array($mimetype, array('image/gif','image/jpeg','image/png'))) {  // It's an image
-        $code = resourcelib_embed_image($fullpanopto, $title);
-
-    } else if ($mediarenderer->can_embed_url($moodlepanopto, $embedoptions)) {
-        // Media (audio/video) file.
-        $code = $mediarenderer->embed_panopto($moodlepanopto, $title, 0, 0, $embedoptions);
-
-    } else {
-        // anything else - just try object tag enlarged as much as possible
-        $code = resourcelib_embed_general($fullpanopto, $title, $clicktoopen, $mimetype);
-    }
+        // Panopto icon at actual size
+        $code = resourcelib_embed_general($fullpanopto, $title, $clicktoopen, NULL);
 
     panopto_print_header($panopto, $cm, $course);
     panopto_print_heading($panopto, $cm, $course);
@@ -326,58 +315,5 @@ function panopto_get_final_display_type($panopto) {
     }
 
     // detect links to local moodle pages
-    if (strpos($panopto->externalpanopto, $CFG->wwwroot) === 0) {
-        if (strpos($panopto->externalpanopto, 'file.php') === false and strpos($panopto->externalpanopto, '.php') !== false ) {
-            // most probably our moodle page with navigation
-            return RESOURCELIB_DISPLAY_OPEN;
-        }
-    }
-
-    static $download = array('application/zip', 'application/x-tar', 'application/g-zip',     // binary formats
-                             'application/pdf', 'text/html');  // these are known to cause trouble for external links, sorry
-    static $embed    = array('image/gif', 'image/jpeg', 'image/png', 'image/svg+xml',         // images
-                             'application/x-shockwave-flash', 'video/x-flv', 'video/x-ms-wm', // video formats
-                             'video/quicktime', 'video/mpeg', 'video/mp4',
-                             'audio/mp3', 'audio/x-realaudio-plugin', 'x-realaudio-plugin',   // audio formats,
-                            );
-
-    $mimetype = resourcelib_guess_url_mimetype($panopto->externalpanopto);
-
-    if (in_array($mimetype, $download)) {
-        return RESOURCELIB_DISPLAY_DOWNLOAD;
-    }
-    if (in_array($mimetype, $embed)) {
-        return RESOURCELIB_DISPLAY_EMBED;
-    }
-
-    // let the browser deal with it somehow
     return RESOURCELIB_DISPLAY_OPEN;
-}
-
-/**
- * Optimised mimetype detection from general Panopto
- * @param $fullpanopto
- * @param int $size of the icon.
- * @return string|null mimetype or null when the filetype is not relevant.
- */
-function panopto_guess_icon($fullpanopto, $size = null) {
-    global $CFG;
-    require_once("$CFG->libdir/filelib.php");
-
-    if (substr_count($fullpanopto, '/') < 3 or substr($fullpanopto, -1) === '/') {
-        // Most probably default directory - index.php, index.html, etc. Return null because
-        // we want to use the default module icon instead of the HTML file icon.
-        return null;
-    }
-
-    $icon = file_extension_icon($fullpanopto, $size);
-    $htmlicon = file_extension_icon('.htm', $size);
-    $unknownicon = file_extension_icon('', $size);
-
-    // We do not want to return those icon types, the module icon is more appropriate.
-    if ($icon === $unknownicon || $icon === $htmlicon) {
-        return null;
-    }
-
-    return $icon;
 }

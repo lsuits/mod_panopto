@@ -47,12 +47,6 @@ class backup_panopto_activity_structure_step extends backup_activity_structure_s
         // Define sources
         $panopto->set_source_table('panopto', array('id' => backup::VAR_ACTIVITYID));
 
-        // Define id annotations
-        //module has no id annotations
-
-        // Define file annotations
-        $panopto->annotate_files('mod_panopto', 'intro', null); // This file area hasn't itemid
-
         // Return the root element (panopto), wrapped into standard activity structure
         return $this->prepare_activity_structure($panopto);
 

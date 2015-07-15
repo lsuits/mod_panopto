@@ -25,7 +25,7 @@
 
 $string['clicktoopen'] = 'Click {$a} link to open resource.';
 $string['configdisplayoptions'] = 'Select all options that should be available, existing settings are not modified. Hold CTRL key to select multiple fields.';
-$string['configframesize'] = 'When a web page or an uploaded file is displayed within a frame, this value is the height (in pixels) of the top frame (which contains the navigation).';
+$string['configframesize'] = 'When a Panopto link is displayed within a frame, this value is the height (in pixels) of the top frame (which contains the navigation).';
 $string['configauthinstance'] = 'The name of the authentication instance set within your Panopto server.';
 $string['configpanoptoserver'] = 'The URL of your Panopto server without a trailing slash.';
 $string['contentheader'] = 'Content';
@@ -40,19 +40,19 @@ $string['displayselect_help'] = 'This setting, and whether the browser allows em
 * In pop-up - The Panopto is displayed in a new browser window without menus or an address bar
 * In frame - The Panopto is displayed within a frame below the navigation bar and Panopto description
 * New window - The Panopto is displayed in a new browser window with menus and an address bar';
-$string['displayselectexplain'] = 'Choose display type, unfortunately not all types are suitable for all Panoptos.';
+$string['displayselectexplain'] = 'Choose display type, unfortunately not all types are suitable for all Panopto links.';
 $string['externalpanopto'] = 'Panopto URL';
 $string['framesize'] = 'Frame height';
-$string['invalidstoredpanopto'] = 'Cannot display this resource, Panopto is invalid.';
-$string['invalidpanopto'] = 'Entered Panopto is invalid';
+$string['invalidstoredpanopto'] = 'Cannot display this resource, the Panopto link is invalid.';
+$string['invalidpanopto'] = 'This Panopto URL is invalid';
 $string['modulename'] = 'Panopto';
-$string['modulename_help'] = 'The Panopto module enables a teacher to provide a web link as a course resource. Anything that is freely available online, such as documents or images, can be linked to; the Panopto doesn’t have to be the home page of a website. The Panopto of a particular web page may be copied and pasted or a teacher can use the file picker and choose a link from a repository such as Flickr, YouTube or Wikimedia (depending upon which repositories are enabled for the site).
+$string['modulename_help'] = 'The Panopto module enables a teacher to provide a Panopto link as a course resource. The course must still be provisioned using the Panopto Block.
 
-There are a number of display options for the Panopto, such as embedded or opening in a new window and advanced options for passing information, such as a student\'s name, to the Panopto if required.
+There are a number of display options for the Panopto link, such as embedded or opening in a new window.
 
-Note that Panoptos can also be added to any other resource or activity type through the text editor.';
+Note that Panopto links can also be added to any other resource or activity type through the text editor.';
 $string['modulename_link'] = 'mod/panopto/view';
-$string['modulenameplural'] = 'Panoptos';
+$string['modulenameplural'] = 'Panopto links';
 $string['page-mod-panopto-x'] = 'Any Panopto module page';
 $string['pluginadministration'] = 'Panopto module administration';
 $string['pluginname'] = 'Panopto';
